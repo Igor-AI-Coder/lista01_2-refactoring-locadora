@@ -5,15 +5,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import original.Aluguel;
 import original.Automovel;
+import original.Locacao;
 
 /**
  * Lista 1.2.2
+ * Extract Method: o calculo sai de dentro do laco, mas continua em Cliente.
+ * O ganho e ficar visivel que valorDeUmaLocacao(Locacao) nao usa nenhum campo de Cliente.
  */
 public class Cliente {
 	private String nome;
-	private List<Aluguel> carrosAlugados = new ArrayList<Aluguel>();
+	private List<Locacao> carrosAlugados = new ArrayList<Locacao>();
 
 	public Cliente(String nome) {
 		this.nome = nome;
@@ -23,8 +25,8 @@ public class Cliente {
 		return nome;
 	}
 
-	public void adicionaAluguel(Aluguel aluguel) {
-		carrosAlugados.add(aluguel);
+	public void adicionaLocacao(Locacao locacao) {
+		carrosAlugados.add(locacao);
 	}
 
 	public String extrato() {
@@ -32,28 +34,28 @@ public class Cliente {
 		double valorTotal = 0.0;
 		int pontosDeAlugadorFrequente = 0;
 
-		Iterator<Aluguel> alugueis = carrosAlugados.iterator();
+		Iterator<Locacao> locacoes = carrosAlugados.iterator();
 		String resultado = "Registro de Alugueis de " + getNome() + fimDeLinha;
 
-		while (alugueis.hasNext()) {
-			Aluguel umaLocacao = alugueis.next();
+		while (locacoes.hasNext()) {
+			Locacao umaLocacao = locacoes.next();
 
-			double valorDaLocacao = valorDeUmAluguel(umaLocacao);
-			pontosDeAlugadorFrequente += pontosDeUmAluguel(umaLocacao);
+			double valorDaLocacao = valorDeUmaLocacao(umaLocacao);
+			pontosDeAlugadorFrequente += pontosDeUmaLocacao(umaLocacao);
 
-			resultado += "\t" + umaLocacao.getCarro().getTitulo() + " (" + umaLocacao.getCarro().getAno() + ")"
-					+ "\t R$ " + String.format(new Locale("pt", "BR"), "%,.2f", valorDaLocacao) + fimDeLinha;
+			resultado += "\t" + umaLocacao.getCarro().getDescricao() + " (" + umaLocacao.getCarro().getAno() + ")"
+					+ "\t R$ " + String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", valorDaLocacao) + fimDeLinha;
 			valorTotal += valorDaLocacao;
 		} // while
 
 		resultado += "Valor total pago: R$ "
-				+ String.format(new Locale("pt", "BR"), "%,.2f", valorTotal) + fimDeLinha;
+				+ String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", valorTotal) + fimDeLinha;
 		resultado += "Voce acumulou " + pontosDeAlugadorFrequente + " pontos de alugador frequente";
 
 		return resultado;
 	}
 
-	private double valorDeUmAluguel(Aluguel umaLocacao) {
+	private double valorDeUmaLocacao(Locacao umaLocacao) {
 		double valorDaLocacao = 0.0;
 
 		switch (umaLocacao.getCarro().getCodigoDoPreco()) {
@@ -76,7 +78,7 @@ public class Cliente {
 		return valorDaLocacao;
 	}
 
-	private int pontosDeUmAluguel(Aluguel umaLocacao) {
+	private int pontosDeUmaLocacao(Locacao umaLocacao) {
 		int pontos = 1;
 		if (umaLocacao.getCarro().getCodigoDoPreco() == Automovel.LUXO
 				&& umaLocacao.getDiasAlugado() > 2) {

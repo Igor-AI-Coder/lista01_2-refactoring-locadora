@@ -5,11 +5,11 @@ import original.Automovel;
 /**
  * Lista 1.2.3
  */
-public class Aluguel {
+public class Locacao {
 	private Automovel carro;
 	private int diasAlugado;
 
-	public Aluguel(Automovel carro, int diasAlugado) {
+	public Locacao(Automovel carro, int diasAlugado) {
 		this.carro = carro;
 		this.diasAlugado = diasAlugado;
 	}
@@ -23,7 +23,7 @@ public class Aluguel {
 	}
 
 	// Expert: os dados do calculo (dias e o carro) estao aqui, nao no Cliente.
-	public double valorDeUmAluguel() {
+	public double valorDeUmaLocacao() {
 		double valorDaLocacao = 0.0;
 
 		switch (getCarro().getCodigoDoPreco()) {

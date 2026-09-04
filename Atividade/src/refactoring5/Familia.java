@@ -7,7 +7,7 @@ public class Familia extends Classificacao {
 	}
 
 	@Override
-	double getValorDoAluguel(int diasAlugado) { // R$ 130,00 por dia
+	double getValorDaLocacao(int diasAlugado) { // R$ 130,00 por dia
 		return diasAlugado * 130.0;
 	}
 }

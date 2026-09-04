@@ -2,28 +2,29 @@ package refactoring5;
 
 /**
  * O atributo codigoDoPreco sumiu: quem sabe o codigo agora e o objeto Classificacao.
- * Automovel e o CREATOR das classificacoes concretas e DELEGA os calculos para elas.
+ * O switch de CALCULO saiu daqui por polimorfismo; sobra o switch de CRIACAO em
+ * setCodigoDoPreco(), que e a responsabilidade de Creator (sairia com um Factory Method).
  */
 public class Automovel implements Alugavel {
 	public static final int BASICO = 0;
 	public static final int FAMILIA = 1;
 	public static final int LUXO = 2;
 
-	private String titulo;
+	private String descricao;
 	private String placa;
 	private int ano;
 	private Classificacao classificacao;
 
-	public Automovel(String titulo, String placa, int ano, int codigoDoPreco) {
-		this.titulo = titulo;
+	public Automovel(String descricao, String placa, int ano, int codigoDoPreco) {
+		this.descricao = descricao;
 		this.placa = placa;
 		this.ano = ano;
 		setCodigoDoPreco(codigoDoPreco);
 	}
 
 	@Override
-	public String getTitulo() {
-		return titulo;
+	public String getDescricao() {
+		return descricao;
 	}
 
 	public String getPlaca() {
@@ -35,6 +36,7 @@ public class Automovel implements Alugavel {
 		return ano;
 	}
 
+	// O atributo saiu, mas o getter fica: quem responde agora e a classificacao.
 	public int getCodigoDoPreco() {
 		return classificacao.getCodigoDoPreco();
 	}
@@ -55,8 +57,8 @@ public class Automovel implements Alugavel {
 	}
 
 	@Override
-	public double getValorDoAluguel(int diasAlugado) {
-		return classificacao.getValorDoAluguel(diasAlugado);
+	public double getValorDaLocacao(int diasAlugado) {
+		return classificacao.getValorDaLocacao(diasAlugado);
 	}
 
 	@Override

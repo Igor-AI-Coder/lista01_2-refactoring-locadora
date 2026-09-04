@@ -10,7 +10,7 @@ import java.util.Locale;
  */
 public class Cliente {
 	private String nome;
-	private List<Aluguel> carrosAlugados = new ArrayList<Aluguel>();
+	private List<Locacao> carrosAlugados = new ArrayList<Locacao>();
 
 	public Cliente(String nome) {
 		this.nome = nome;
@@ -20,26 +20,26 @@ public class Cliente {
 		return nome;
 	}
 
-	public void adicionaAluguel(Aluguel aluguel) {
-		carrosAlugados.add(aluguel);
+	public void adicionaLocacao(Locacao locacao) {
+		carrosAlugados.add(locacao);
 	}
 
 	public String extrato() {
 		final String fimDeLinha = System.getProperty("line.separator");
 
-		Iterator<Aluguel> alugueis = carrosAlugados.iterator();
+		Iterator<Locacao> locacoes = carrosAlugados.iterator();
 		String resultado = "Registro de Alugueis de " + getNome() + fimDeLinha;
 
-		while (alugueis.hasNext()) {
-			Aluguel umaLocacao = alugueis.next();
-			// sem variavel temporaria: o valor vai direto para a linha
-			resultado += "\t" + umaLocacao.getCarro().getTitulo() + " (" + umaLocacao.getCarro().getAno() + ")"
-					+ "\t R$ " + String.format(new Locale("pt", "BR"), "%,.2f", umaLocacao.valorDeUmAluguel())
+		while (locacoes.hasNext()) {
+			Locacao umaLocacao = locacoes.next();
+			// sem variavel temporaria: menos estado intermediario para acompanhar na leitura
+			resultado += "\t" + umaLocacao.getCarro().getDescricao() + " (" + umaLocacao.getCarro().getAno() + ")"
+					+ "\t R$ " + String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", umaLocacao.valorDeUmaLocacao())
 					+ fimDeLinha;
 		} // while
 
 		resultado += "Valor total pago: R$ "
-				+ String.format(new Locale("pt", "BR"), "%,.2f", getValorTotal()) + fimDeLinha;
+				+ String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", getValorTotal()) + fimDeLinha;
 		resultado += "Voce acumulou " + getPontosTotaisDeAlugadorFrequente()
 				+ " pontos de alugador frequente";
 
@@ -48,15 +48,15 @@ public class Cliente {
 
 	public double getValorTotal() {
 		double valorTotal = 0.0;
-		for (Aluguel umaLocacao : carrosAlugados) {
-			valorTotal += umaLocacao.valorDeUmAluguel();
+		for (Locacao umaLocacao : carrosAlugados) {
+			valorTotal += umaLocacao.valorDeUmaLocacao();
 		}
 		return valorTotal;
 	}
 
 	public int getPontosTotaisDeAlugadorFrequente() {
 		int pontos = 0;
-		for (Aluguel umaLocacao : carrosAlugados) {
+		for (Locacao umaLocacao : carrosAlugados) {
 			pontos += umaLocacao.getPontosDeAlugadorFrequente();
 		}
 		return pontos;

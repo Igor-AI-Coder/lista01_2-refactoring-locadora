@@ -1,10 +1,10 @@
 package original;
 
-public class Aluguel {
+public class Locacao {
 	private Automovel carro;
 	private int diasAlugado;
 
-	public Aluguel(Automovel carro, int diasAlugado) {
+	public Locacao(Automovel carro, int diasAlugado) {
 		this.carro = carro;
 		this.diasAlugado = diasAlugado;
 	}

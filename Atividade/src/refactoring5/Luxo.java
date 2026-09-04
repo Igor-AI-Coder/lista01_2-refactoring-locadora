@@ -7,7 +7,7 @@ public class Luxo extends Classificacao {
 	}
 
 	@Override
-	double getValorDoAluguel(int diasAlugado) { // R$ 200,00 por dia; 10% off acima de 4 diarias
+	double getValorDaLocacao(int diasAlugado) { // R$ 200,00 por dia; 10% off acima de 4 diarias
 		double valor = diasAlugado * 200.0;
 		if (diasAlugado > 4) {
 			valor -= valor * 0.1;

@@ -7,7 +7,7 @@ public class Basica extends Classificacao {
 	}
 
 	@Override
-	double getValorDoAluguel(int diasAlugado) { // R$ 90,00 por dia
+	double getValorDaLocacao(int diasAlugado) { // R$ 90,00 por dia
 		return diasAlugado * 90.0;
 	}
 }

@@ -3,27 +3,27 @@ package refactoring3;
 /**
  * Lista 1.2.4 - refactoring3
  * O switch testava o codigoDoPreco, que e dado do Automovel. Pelo Expert,
- * o calculo sobe para ca; o Aluguel passa apenas o dado que e dele: diasAlugado.
+ * o calculo sobe para ca; a Locacao passa apenas o dado que e dela: diasAlugado.
  */
 public class Automovel {
 	public static final int BASICO = 0;
 	public static final int FAMILIA = 1;
 	public static final int LUXO = 2;
 
-	private String titulo;
+	private String descricao;
 	private String placa;
 	private int ano;
 	private int codigoDoPreco;
 
-	public Automovel(String titulo, String placa, int ano, int codigoDoPreco) {
-		this.titulo = titulo;
+	public Automovel(String descricao, String placa, int ano, int codigoDoPreco) {
+		this.descricao = descricao;
 		this.placa = placa;
 		this.ano = ano;
 		this.codigoDoPreco = codigoDoPreco;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getDescricao() {
+		return descricao;
 	}
 
 	public String getPlaca() {
@@ -42,7 +42,7 @@ public class Automovel {
 		this.codigoDoPreco = codigoDoPreco;
 	}
 
-	public double getValorDoAluguel(int diasAlugado) {
+	public double getValorDaLocacao(int diasAlugado) {
 		double valorDaLocacao = 0.0;
 
 		switch (getCodigoDoPreco()) {

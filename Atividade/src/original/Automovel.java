@@ -5,20 +5,20 @@ public class Automovel {
 	public static final int FAMILIA = 1;
 	public static final int LUXO = 2;
 
-	private String titulo;
+	private String descricao;
 	private String placa;
 	private int ano;
 	private int codigoDoPreco;
 
-	public Automovel(String titulo, String placa, int ano, int codigoDoPreco) {
-		this.titulo = titulo;
+	public Automovel(String descricao, String placa, int ano, int codigoDoPreco) {
+		this.descricao = descricao;
 		this.placa = placa;
 		this.ano = ano;
 		this.codigoDoPreco = codigoDoPreco;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getDescricao() {
+		return descricao;
 	}
 
 	public String getPlaca() {

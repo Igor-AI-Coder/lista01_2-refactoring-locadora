@@ -1,11 +1,11 @@
 package refactoring5;
 
-public class Aluguel {
+public class Locacao {
 	// Antes: private Automovel carro; -> agora depende da abstracao (DIP).
 	private Alugavel item;
 	private int diasAlugado;
 
-	public Aluguel(Alugavel item, int diasAlugado) {
+	public Locacao(Alugavel item, int diasAlugado) {
 		this.item = item;
 		this.diasAlugado = diasAlugado;
 	}
@@ -18,8 +18,8 @@ public class Aluguel {
 		return diasAlugado;
 	}
 
-	public double valorDeUmAluguel() {
-		return getItem().getValorDoAluguel(getDiasAlugado());
+	public double valorDeUmaLocacao() {
+		return getItem().getValorDaLocacao(getDiasAlugado());
 	}
 
 	public int getPontosDeAlugadorFrequente() {

@@ -10,7 +10,7 @@ import java.util.Locale;
  */
 public class Cliente {
 	private String nome;
-	private List<Aluguel> carrosAlugados = new ArrayList<Aluguel>();
+	private List<Locacao> carrosAlugados = new ArrayList<Locacao>();
 
 	public Cliente(String nome) {
 		this.nome = nome;
@@ -20,25 +20,25 @@ public class Cliente {
 		return nome;
 	}
 
-	public void adicionaAluguel(Aluguel aluguel) {
-		carrosAlugados.add(aluguel);
+	public void adicionaLocacao(Locacao locacao) {
+		carrosAlugados.add(locacao);
 	}
 
 	public String extrato() {
 		final String fimDeLinha = System.getProperty("line.separator");
 
-		Iterator<Aluguel> alugueis = carrosAlugados.iterator();
+		Iterator<Locacao> locacoes = carrosAlugados.iterator();
 		String resultado = "Registro de Alugueis de " + getNome() + fimDeLinha;
 
-		while (alugueis.hasNext()) {
-			Aluguel umaLocacao = alugueis.next();
-			resultado += "\t" + umaLocacao.getCarro().getTitulo() + " (" + umaLocacao.getCarro().getAno() + ")"
-					+ "\t R$ " + String.format(new Locale("pt", "BR"), "%,.2f", umaLocacao.valorDeUmAluguel())
+		while (locacoes.hasNext()) {
+			Locacao umaLocacao = locacoes.next();
+			resultado += "\t" + umaLocacao.getCarro().getDescricao() + " (" + umaLocacao.getCarro().getAno() + ")"
+					+ "\t R$ " + String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", umaLocacao.valorDeUmaLocacao())
 					+ fimDeLinha;
 		}
 
 		resultado += "Valor total pago: R$ "
-				+ String.format(new Locale("pt", "BR"), "%,.2f", getValorTotal()) + fimDeLinha;
+				+ String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", getValorTotal()) + fimDeLinha;
 		resultado += "Voce acumulou " + getPontosTotaisDeAlugadorFrequente()
 				+ " pontos de alugador frequente";
 
@@ -50,22 +50,22 @@ public class Cliente {
 		final String fimDeLinha = System.getProperty("line.separator");
 		int sequencia = 0;
 
-		Iterator<Aluguel> alugueis = carrosAlugados.iterator();
+		Iterator<Locacao> locacoes = carrosAlugados.iterator();
 		String resultado = "<html><body>" + fimDeLinha;
 		resultado += String.format("<H2>Registro de Alugueis de <EM> %s </EM></H2>", getNome()) + fimDeLinha;
 		resultado += "<table border=\"1\"><tr><th>Seq</th><th>Veiculo</th><th>Diarias</th><th>Valor</th></tr>"
 				+ fimDeLinha;
 
-		while (alugueis.hasNext()) {
-			Aluguel umaLocacao = alugueis.next();
+		while (locacoes.hasNext()) {
+			Locacao umaLocacao = locacoes.next();
 			sequencia++;
-			resultado += String.format(new Locale("pt", "BR"),
+			resultado += String.format(Locale.forLanguageTag("pt-BR"),
 					"<tr><th>%02d.</th><th>%s</th><th>%2d</th><th>R$ %,.2f</th></tr>",
-					sequencia, umaLocacao.getCarro().getTitulo(), umaLocacao.getDiasAlugado(),
-					umaLocacao.valorDeUmAluguel()) + fimDeLinha;
+					sequencia, umaLocacao.getCarro().getDescricao(), umaLocacao.getDiasAlugado(),
+					umaLocacao.valorDeUmaLocacao()) + fimDeLinha;
 		}
 
-		resultado += String.format(new Locale("pt", "BR"),
+		resultado += String.format(Locale.forLanguageTag("pt-BR"),
 				"<tfoot><tr><td colspan=\"3\">Valor total pago:</td><td><EM>R$ %,.2f</EM></td></tr></tfoot></table>",
 				getValorTotal()) + fimDeLinha;
 		resultado += "<P>Voce acumulou <EM>" + getPontosTotaisDeAlugadorFrequente()
@@ -75,15 +75,15 @@ public class Cliente {
 
 	public double getValorTotal() {
 		double valorTotal = 0.0;
-		for (Aluguel umaLocacao : carrosAlugados) {
-			valorTotal += umaLocacao.valorDeUmAluguel();
+		for (Locacao umaLocacao : carrosAlugados) {
+			valorTotal += umaLocacao.valorDeUmaLocacao();
 		}
 		return valorTotal;
 	}
 
 	public int getPontosTotaisDeAlugadorFrequente() {
 		int pontos = 0;
-		for (Aluguel umaLocacao : carrosAlugados) {
+		for (Locacao umaLocacao : carrosAlugados) {
 			pontos += umaLocacao.getPontosDeAlugadorFrequente();
 		}
 		return pontos;

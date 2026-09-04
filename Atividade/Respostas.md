@@ -9,11 +9,11 @@ na classe errada. Qualquer reajuste obriga a mexer em "Cliente", que não deveri
 
 1.2.3
 
-Refactoring 2.1: Locadora não mudou e Cliente mudou só a linha da chamada. O Expert Information foi atendido, já que a responsabilidade foi pra classe que tem os dados. O acoplamento do Cliente diminuiu porque ele não conhece mais Automovel. A coesão aumentou nas duas: Cliente perdeu uma responsabilidade que não era dele e Aluguel deixou de ser só um contêiner sem comportamento.
+Refactoring 2.1: Locadora não mudou e Cliente mudou só a linha da chamada. O Expert Information foi atendido, já que a responsabilidade foi pra classe que tem os dados. O acoplamento do Cliente diminuiu porque ele não conhece mais Automovel. A coesão aumentou nas duas: Cliente perdeu uma responsabilidade que não era dele e Locacao deixou de ser só um contêiner sem comportamento.
 
 Refactoring 2.2: Nenhuma outra classe foi alterada, a mudança é interna ao extrato() mesmo.
 
-Refactoring 2.3: A informação pra calcular os pontos está na Aluguel (dias) e no Automovel (código do preço, acessível pela locação), então movi o cálculo pra Locacao.getPontosDeAlugadorFrequente(). Ajuda no Expert Information e ainda tira a duplicação do teste == LUXO, que antes aparecia no switch e de novo no cálculo dos pontos. Agora fica em um método só.
+Refactoring 2.3: A informação pra calcular os pontos está na Locacao (dias) e no Automovel (código do preço, acessível pela locação), então movi o cálculo pra Locacao.getPontosDeAlugadorFrequente(). Ajuda no Expert Information e ainda tira a duplicação do teste == LUXO, que antes aparecia no switch e de novo no cálculo dos pontos. Agora fica em um método só.
 
 Refactoring 2.4: Criei getValorTotal() e getPontosTotaisDeAlugadorFrequente() no Cliente, eliminando as duas variáveis acumuladoras. Ajuda ainda mais na Alta Coesão.
 

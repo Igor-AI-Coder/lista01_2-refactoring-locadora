@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public class Cliente {
 	private String nome;
-	private List<Aluguel> carrosAlugados = new ArrayList<Aluguel>();
+	private List<Locacao> carrosAlugados = new ArrayList<Locacao>();
 
 	public Cliente(String nome) {
 		this.nome = nome;
@@ -17,8 +17,8 @@ public class Cliente {
 		return nome;
 	}
 
-	public void adicionaAluguel(Aluguel aluguel) {
-		carrosAlugados.add(aluguel);
+	public void adicionaLocacao(Locacao locacao) {
+		carrosAlugados.add(locacao);
 	}
 
 	public String extrato() {
@@ -26,12 +26,12 @@ public class Cliente {
 		double valorTotal = 0.0;
 		int pontosDeAlugadorFrequente = 0;
 
-		Iterator<Aluguel> alugueis = carrosAlugados.iterator();
+		Iterator<Locacao> locacoes = carrosAlugados.iterator();
 		String resultado = "Registro de Alugueis de " + getNome() + fimDeLinha;
 
-		while(alugueis.hasNext()) {
+		while(locacoes.hasNext()) {
 			double valorCorrente = 0.0;
-			Aluguel cada = alugueis.next();
+			Locacao cada = locacoes.next();
 
 			// determina valores para cada linha
 			switch(cada.getCarro().getCodigoDoPreco()) {
@@ -53,22 +53,22 @@ public class Cliente {
 
 			// trata de pontos de alugador frequente
 			pontosDeAlugadorFrequente++;
-			// adiciona bonus para aluguel de carro de luxo por mais de 2 dias
+			// adiciona bonus para locacao de carro de luxo por mais de 2 dias
 			if(cada.getCarro().getCodigoDoPreco() == Automovel.LUXO &&
 				cada.getDiasAlugado() > 2) {
 				pontosDeAlugadorFrequente += 2;
 			}
 
-			// mostra valores para este aluguel
-			resultado += "\t" + cada.getCarro().getTitulo() + " (" + cada.getCarro().getAno() + ")"
-				+ "\t R$ " + String.format(new Locale("pt", "BR"), "%,.2f", valorCorrente) + fimDeLinha;
+			// mostra valores para esta locacao
+			resultado += "\t" + cada.getCarro().getDescricao() + " (" + cada.getCarro().getAno() + ")"
+				+ "\t R$ " + String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", valorCorrente) + fimDeLinha;
 			valorTotal += valorCorrente;
 
 		} // while
 
 		// adiciona rodape
 		resultado += "Valor total pago: R$ "
-			+ String.format(new Locale("pt", "BR"), "%,.2f", valorTotal) + fimDeLinha;
+			+ String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", valorTotal) + fimDeLinha;
 		resultado += "Voce acumulou " + pontosDeAlugadorFrequente +
               " pontos de alugador frequente";
 

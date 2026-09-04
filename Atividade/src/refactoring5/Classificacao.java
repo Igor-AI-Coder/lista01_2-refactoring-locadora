@@ -10,7 +10,7 @@ public abstract class Classificacao {
 
 	abstract int getCodigoDoPreco();
 
-	abstract double getValorDoAluguel(int diasAlugado);
+	abstract double getValorDaLocacao(int diasAlugado);
 
 	// Comportamento PADRAO: vale para BASICO e FAMILIA.
 	int getPontosDeAlugadorFrequente(int diasAlugado) {
