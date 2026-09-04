@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Lista 1.2.4
+ * Lista 1.2.4 - Cliente ganha extratoHTML() praticamente de graca,
+ * porque getValorTotal() e getPontosTotaisDeAlugadorFrequente() ja existem.
  */
 public class Cliente {
+	private static final Locale BR = Locale.forLanguageTag("pt-BR");
+	private static final String FIM_DE_LINHA = System.lineSeparator();
+
 	private String nome;
 	private List<Locacao> carrosAlugados = new ArrayList<Locacao>();
 
@@ -25,67 +29,82 @@ public class Cliente {
 	}
 
 	public String extrato() {
-		final String fimDeLinha = System.getProperty("line.separator");
-
+		int sequencia = 0;
 		Iterator<Locacao> locacoes = carrosAlugados.iterator();
-		String resultado = "Registro de Alugueis de " + getNome() + fimDeLinha;
+		String resultado = cabecalho();
 
 		while (locacoes.hasNext()) {
-			Locacao umaLocacao = locacoes.next();
-			resultado += "\t" + umaLocacao.getCarro().getDescricao() + " (" + umaLocacao.getCarro().getAno() + ")"
-					+ "\t R$ " + String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", umaLocacao.valorDeUmaLocacao())
-					+ fimDeLinha;
+			Locacao cada = locacoes.next();
+			sequencia++;
+			resultado += linhaDoExtrato(sequencia, cada, cada.valorDeUmaLocacao());
 		}
 
-		resultado += "Valor total pago: R$ "
-				+ String.format(Locale.forLanguageTag("pt-BR"), "%,.2f", getValorTotal()) + fimDeLinha;
-		resultado += "Voce acumulou " + getPontosTotaisDeAlugadorFrequente()
-				+ " pontos de alugador frequente";
-
-		return resultado;
+		return resultado + rodape();
 	}
 
-	// Novo formato de saida reaproveitando os mesmos totais: nenhum calculo duplicado.
 	public String extratoHTML() {
-		final String fimDeLinha = System.getProperty("line.separator");
 		int sequencia = 0;
-
 		Iterator<Locacao> locacoes = carrosAlugados.iterator();
-		String resultado = "<html><body>" + fimDeLinha;
-		resultado += String.format("<H2>Registro de Alugueis de <EM> %s </EM></H2>", getNome()) + fimDeLinha;
-		resultado += "<table border=\"1\"><tr><th>Seq</th><th>Veiculo</th><th>Diarias</th><th>Valor</th></tr>"
-				+ fimDeLinha;
+
+		String resultado = "<html><body>" + FIM_DE_LINHA;
+		resultado += String.format("<H2>Registro de Locacoes de <EM> %s </EM></H2>", getNome()) + FIM_DE_LINHA;
+		resultado += "<table border=\"1\"><tr><th>Seq</th><th>Automovel</th><th>Ano</th>"
+				+ "<th>Diarias</th><th>Valor</th></tr>" + FIM_DE_LINHA;
 
 		while (locacoes.hasNext()) {
-			Locacao umaLocacao = locacoes.next();
+			Locacao cada = locacoes.next();
 			sequencia++;
-			resultado += String.format(Locale.forLanguageTag("pt-BR"),
-					"<tr><th>%02d.</th><th>%s</th><th>%2d</th><th>R$ %,.2f</th></tr>",
-					sequencia, umaLocacao.getCarro().getDescricao(), umaLocacao.getDiasAlugado(),
-					umaLocacao.valorDeUmaLocacao()) + fimDeLinha;
+			resultado += String.format(BR,
+					"<tr><th>%02d.</th><th>%s</th><th>%4d</th><th>%2d</th><th>R$ %8.2f</th></tr>",
+					sequencia,
+					cada.getCarro().getDescricao(),
+					cada.getCarro().getAno(),
+					cada.getDiasAlugado(),
+					cada.valorDeUmaLocacao()) + FIM_DE_LINHA;
 		}
 
-		resultado += String.format(Locale.forLanguageTag("pt-BR"),
-				"<tfoot><tr><td colspan=\"3\">Valor total pago:</td><td><EM>R$ %,.2f</EM></td></tr></tfoot></table>",
-				getValorTotal()) + fimDeLinha;
+		resultado += String.format(BR,
+				"<tfoot><tr><td colspan=\"4\">Valor Acumulado em diarias:</td>"
+				+ "<td><EM>R$ %8.2f</EM></td></tr></tfoot></table>", getValorTotal()) + FIM_DE_LINHA;
 		resultado += "<P>Voce acumulou <EM>" + getPontosTotaisDeAlugadorFrequente()
-				+ " pontos </EM> de alugador frequente</p></body></html>";
+				+ " pontos </EM> de locador frequente</p></body></html>";
 		return resultado;
 	}
 
 	public double getValorTotal() {
 		double valorTotal = 0.0;
-		for (Locacao umaLocacao : carrosAlugados) {
-			valorTotal += umaLocacao.valorDeUmaLocacao();
+		for (Locacao cada : carrosAlugados) {
+			valorTotal += cada.valorDeUmaLocacao();
 		}
 		return valorTotal;
 	}
 
 	public int getPontosTotaisDeAlugadorFrequente() {
 		int pontos = 0;
-		for (Locacao umaLocacao : carrosAlugados) {
-			pontos += umaLocacao.getPontosDeAlugadorFrequente();
+		for (Locacao cada : carrosAlugados) {
+			pontos += cada.getPontosDeAlugadorFrequente();
 		}
 		return pontos;
+	}
+
+	private String cabecalho() {
+		return "Registro de Locacoes de " + getNome() + FIM_DE_LINHA
+				+ "Seq Automovel              Ano Diarias  Valor Pago" + FIM_DE_LINHA
+				+ "=== ==================== ===== ======= ===========" + FIM_DE_LINHA;
+	}
+
+	private String linhaDoExtrato(int sequencia, Locacao umaLocacao, double valorDaLocacao) {
+		return String.format(BR, "%02d. %-20s %5d %7d R$ %8.2f",
+				sequencia,
+				umaLocacao.getCarro().getDescricao(),
+				umaLocacao.getCarro().getAno(),
+				umaLocacao.getDiasAlugado(),
+				valorDaLocacao) + FIM_DE_LINHA;
+	}
+
+	private String rodape() {
+		return "====================================================" + FIM_DE_LINHA
+				+ String.format(BR, "Valor Acumulado em diarias............: R$ %8.2f", getValorTotal()) + FIM_DE_LINHA
+				+ "Voce acumulou " + getPontosTotaisDeAlugadorFrequente() + " pontos de locador frequente";
 	}
 }

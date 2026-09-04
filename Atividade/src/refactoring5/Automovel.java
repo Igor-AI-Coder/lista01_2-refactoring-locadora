@@ -1,9 +1,9 @@
 package refactoring5;
 
 /**
- * O atributo codigoDoPreco sumiu: quem sabe o codigo agora e o objeto Classificacao.
- * O switch de CALCULO saiu daqui por polimorfismo; sobra o switch de CRIACAO em
- * setCodigoDoPreco(), que e a responsabilidade de Creator (sairia com um Factory Method).
+ * O atributo codigoDoPreco sumiu: quem sabe o codigo agora e o objeto
+ * Classificacao. Automovel e o CREATOR das classificacoes concretas
+ * (ele tem o dado necessario para inicializa-las) e DELEGA os calculos.
  */
 public class Automovel implements Alugavel {
 	public static final int BASICO = 0;
@@ -36,12 +36,12 @@ public class Automovel implements Alugavel {
 		return ano;
 	}
 
-	// O atributo saiu, mas o getter fica: quem responde agora e a classificacao.
 	public int getCodigoDoPreco() {
 		return classificacao.getCodigoDoPreco();
 	}
 
-	// CREATOR: unico ponto do sistema que muda quando surgir uma nova classificacao.
+	// CREATOR: cria a classificacao concreta a partir do codigo recebido.
+	// E o unico ponto do sistema que precisa mudar quando surgir PREMIUM.
 	public void setCodigoDoPreco(int codigoDoPreco) {
 		switch (codigoDoPreco) {
 		case BASICO:
@@ -53,6 +53,8 @@ public class Automovel implements Alugavel {
 		case LUXO:
 			classificacao = new Luxo();
 			break;
+		default:
+			throw new IllegalArgumentException("Codigo de preco invalido: " + codigoDoPreco);
 		}
 	}
 

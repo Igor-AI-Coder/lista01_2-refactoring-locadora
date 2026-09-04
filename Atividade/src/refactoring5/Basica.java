@@ -8,6 +8,6 @@ public class Basica extends Classificacao {
 
 	@Override
 	double getValorDaLocacao(int diasAlugado) { // R$ 90,00 por dia
-		return diasAlugado * 90.0;
+		return diasAlugado * 90.00;
 	}
 }

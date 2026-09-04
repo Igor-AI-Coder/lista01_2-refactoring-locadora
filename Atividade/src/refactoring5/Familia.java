@@ -8,6 +8,6 @@ public class Familia extends Classificacao {
 
 	@Override
 	double getValorDaLocacao(int diasAlugado) { // R$ 130,00 por dia
-		return diasAlugado * 130.0;
+		return diasAlugado * 130.00;
 	}
 }

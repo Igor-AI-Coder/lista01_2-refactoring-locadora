@@ -1,8 +1,5 @@
 package refactoring3;
 
-/**
- * Lista 1.2.4
- */
 public class Locacao {
 	private Automovel carro;
 	private int diasAlugado;
@@ -20,7 +17,7 @@ public class Locacao {
 		return diasAlugado;
 	}
 
-	// INDIRECAO: os metodos continuam aqui, mas so repassam para o Automovel.
+	// Mantem a mesma interface publica, mas apenas DELEGA para o Automovel.
 	public double valorDeUmaLocacao() {
 		return getCarro().getValorDaLocacao(getDiasAlugado());
 	}

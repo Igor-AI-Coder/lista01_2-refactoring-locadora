@@ -1,9 +1,12 @@
-Registro de Alugueis de Alex Sandro
-	Toyota Corolla xEi (2021)	 R$ 1.800,00
-	Fiat Mobi (2021)	 R$ 180,00
-	BMW Serie 7 (2022)	 R$ 5.400,00
-	Fiat Siena (2023)	 R$ 520,00
-	Honda HRV (2024)	 R$ 1.300,00
-	Volkswagen Gol (2024)	 R$ 270,00
-Valor total pago: R$ 9.470,00
-Voce acumulou 10 pontos de alugador frequente
+Registro de Locacoes de Alex Sandro
+Seq Automovel              Ano Diarias  Valor Pago
+=== ==================== ===== ======= ===========
+01. Toyota Corolla xEi    2021      10 R$  1800,00
+02. Fiat Mobi             2021       2 R$   180,00
+03. BMW Serie 7           2022      30 R$  5400,00
+04. Fiat Siena            2023       4 R$   520,00
+05. Honda HRV             2024      10 R$  1300,00
+06. Volkswagen Gol        2024       3 R$   270,00
+====================================================
+Valor Acumulado em diarias............: R$  9470,00
+Voce acumulou 10 pontos de locador frequente

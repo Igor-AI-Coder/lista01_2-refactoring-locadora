@@ -1,6 +1,6 @@
-package refactoring4;
+package refactoring1;
 
-public class Automovel implements Alugavel {
+public class Automovel {
 	public static final int BASICO = 0;
 	public static final int FAMILIA = 1;
 	public static final int LUXO = 2;
@@ -17,7 +17,6 @@ public class Automovel implements Alugavel {
 		this.codigoDoPreco = codigoDoPreco;
 	}
 
-	@Override
 	public String getDescricao() {
 		return descricao;
 	}
@@ -26,7 +25,6 @@ public class Automovel implements Alugavel {
 		return placa;
 	}
 
-	@Override
 	public int getAno() {
 		return ano;
 	}
@@ -37,37 +35,5 @@ public class Automovel implements Alugavel {
 
 	public void setCodigoDoPreco(int codigoDoPreco) {
 		this.codigoDoPreco = codigoDoPreco;
-	}
-
-	@Override
-	public double getValorDaLocacao(int diasAlugado) {
-		double valorDaLocacao = 0.0;
-
-		switch (getCodigoDoPreco()) {
-		case BASICO:
-			valorDaLocacao += diasAlugado * 90.00;
-			break;
-
-		case FAMILIA:
-			valorDaLocacao += diasAlugado * 130.00;
-			break;
-
-		case LUXO:
-			valorDaLocacao += diasAlugado * 200.00;
-			if (diasAlugado > 4) {
-				valorDaLocacao *= 0.9;
-			}
-			break;
-		}
-		return valorDaLocacao;
-	}
-
-	@Override
-	public int getPontosDeAlugadorFrequente(int diasAlugado) {
-		int pontos = 1;
-		if (getCodigoDoPreco() == LUXO && diasAlugado > 2) {
-			pontos += 2;
-		}
-		return pontos;
 	}
 }

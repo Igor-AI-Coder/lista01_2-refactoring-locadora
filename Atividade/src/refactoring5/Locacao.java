@@ -1,7 +1,7 @@
 package refactoring5;
 
 public class Locacao {
-	// Antes: private Automovel carro; -> agora depende da abstracao (DIP).
+	// Antes: private Automovel carro; -> agora depende da abstracao.
 	private Alugavel item;
 	private int diasAlugado;
 

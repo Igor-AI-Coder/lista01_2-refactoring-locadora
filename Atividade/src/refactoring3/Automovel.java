@@ -2,8 +2,10 @@ package refactoring3;
 
 /**
  * Lista 1.2.4 - refactoring3
- * O switch testava o codigoDoPreco, que e dado do Automovel. Pelo Expert,
- * o calculo sobe para ca; a Locacao passa apenas o dado que e dela: diasAlugado.
+ *
+ * Novo questionamento: o switch de Locacao testava dados do AUTOMOVEL
+ * (codigoDoPreco), nao dados de Locacao. Pelo Information Expert, o calculo
+ * pertence a Automovel. Locacao passa apenas o dado que e dela: diasAlugado.
  */
 public class Automovel {
 	public static final int BASICO = 0;
@@ -46,22 +48,21 @@ public class Automovel {
 		double valorDaLocacao = 0.0;
 
 		switch (getCodigoDoPreco()) {
-		case BASICO:
-			valorDaLocacao += diasAlugado * 90.0;
+		case BASICO: // R$ 90.00 por dia
+			valorDaLocacao += diasAlugado * 90.00;
 			break;
 
-		case FAMILIA:
-			valorDaLocacao += diasAlugado * 130.0;
+		case FAMILIA: // R$ 130.00 por dia
+			valorDaLocacao += diasAlugado * 130.00;
 			break;
 
-		case LUXO:
-			valorDaLocacao += diasAlugado * 200.0;
-			if (diasAlugado > 4) {
-				valorDaLocacao -= valorDaLocacao * 0.1;
+		case LUXO: // R$ 200.00 por dia
+			valorDaLocacao += diasAlugado * 200.00;
+			if (diasAlugado > 4) { // desconto de 10%
+				valorDaLocacao *= 0.9;
 			}
 			break;
-		} // switch
-
+		}
 		return valorDaLocacao;
 	}
 
