@@ -4,27 +4,28 @@ package refactoring3;
  * Lista 1.2.4
  */
 public class Aluguel {
-	private DVD dvd;
+	private Automovel carro;
 	private int diasAlugado;
 
-	public Aluguel(DVD dvd, int diasAlugado) {
-		this.dvd = dvd;
+	public Aluguel(Automovel carro, int diasAlugado) {
+		this.carro = carro;
 		this.diasAlugado = diasAlugado;
 	}
 
-	public DVD getDVD() {
-		return dvd;
+	public Automovel getCarro() {
+		return carro;
 	}
 
 	public int getDiasAlugado() {
 		return diasAlugado;
 	}
 
+	// INDIRECAO: os metodos continuam aqui, mas so repassam para o Automovel.
 	public double valorDeUmAluguel() {
-		return getDVD().getValorDoAluguel(getDiasAlugado());
+		return getCarro().getValorDoAluguel(getDiasAlugado());
 	}
 
 	public int getPontosDeAlugadorFrequente() {
-		return getDVD().getPontosDeAlugadorFrequente(getDiasAlugado());
+		return getCarro().getPontosDeAlugadorFrequente(getDiasAlugado());
 	}
 }

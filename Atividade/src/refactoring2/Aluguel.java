@@ -1,57 +1,55 @@
 package refactoring2;
 
-import locadora.DVD;
+import original.Automovel;
 
 /**
  * Lista 1.2.3
  */
 public class Aluguel {
-	private DVD dvd;
+	private Automovel carro;
 	private int diasAlugado;
 
-	public Aluguel(DVD dvd, int diasAlugado) {
-		this.dvd = dvd;
+	public Aluguel(Automovel carro, int diasAlugado) {
+		this.carro = carro;
 		this.diasAlugado = diasAlugado;
 	}
 
-	public DVD getDVD() {
-		return dvd;
+	public Automovel getCarro() {
+		return carro;
 	}
 
 	public int getDiasAlugado() {
 		return diasAlugado;
 	}
 
+	// Expert: os dados do calculo (dias e o carro) estao aqui, nao no Cliente.
 	public double valorDeUmAluguel() {
-		double valorDoAluguel = 0.0;
+		double valorDaLocacao = 0.0;
 
-		switch (getDVD().getCódigoDePreço()) {
-		case DVD.NORMAL:
-			valorDoAluguel += 2.0;
-			if (getDiasAlugado() > 2) {
-				valorDoAluguel += (getDiasAlugado() - 2) * 1.5;
-			}
+		switch (getCarro().getCodigoDoPreco()) {
+		case Automovel.BASICO:
+			valorDaLocacao += getDiasAlugado() * 90.0;
 			break;
 
-		case DVD.LANÇAMENTO:
-			valorDoAluguel += getDiasAlugado() * 3.00;
+		case Automovel.FAMILIA:
+			valorDaLocacao += getDiasAlugado() * 130.0;
 			break;
 
-		case DVD.INFANTIL:
-			valorDoAluguel += 1.5;
-			if (getDiasAlugado() > 3) {
-				valorDoAluguel += (getDiasAlugado() - 3) * 1.5;
+		case Automovel.LUXO:
+			valorDaLocacao += getDiasAlugado() * 200.0;
+			if (getDiasAlugado() > 4) {
+				valorDaLocacao -= valorDaLocacao * 0.1;
 			}
 			break;
 		} // switch
 
-		return valorDoAluguel;
+		return valorDaLocacao;
 	}
 
 	public int getPontosDeAlugadorFrequente() {
 		int pontos = 1;
-		if (getDVD().getCódigoDePreço() == DVD.LANÇAMENTO && getDiasAlugado() > 1) {
-			pontos++;
+		if (getCarro().getCodigoDoPreco() == Automovel.LUXO && getDiasAlugado() > 2) {
+			pontos += 2;
 		}
 		return pontos;
 	}

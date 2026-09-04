@@ -3,17 +3,17 @@ package refactoring1;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
-import locadora.Aluguel;
-import locadora.DVD;
+import original.Aluguel;
+import original.Automovel;
 
 /**
  * Lista 1.2.2
  */
-
 public class Cliente {
 	private String nome;
-	private List<Aluguel> dvdsAlugados = new ArrayList<Aluguel>();
+	private List<Aluguel> carrosAlugados = new ArrayList<Aluguel>();
 
 	public Cliente(String nome) {
 		this.nome = nome;
@@ -24,7 +24,7 @@ public class Cliente {
 	}
 
 	public void adicionaAluguel(Aluguel aluguel) {
-		dvdsAlugados.add(aluguel);
+		carrosAlugados.add(aluguel);
 	}
 
 	public String extrato() {
@@ -32,56 +32,55 @@ public class Cliente {
 		double valorTotal = 0.0;
 		int pontosDeAlugadorFrequente = 0;
 
-		Iterator<Aluguel> alugueis = dvdsAlugados.iterator();
+		Iterator<Aluguel> alugueis = carrosAlugados.iterator();
 		String resultado = "Registro de Alugueis de " + getNome() + fimDeLinha;
 
 		while (alugueis.hasNext()) {
-			Aluguel cada = alugueis.next();
+			Aluguel umaLocacao = alugueis.next();
 
-			double valorCorrente = valorDeUmAluguel(cada);
-			pontosDeAlugadorFrequente += pontosDeUmAluguel(cada);
+			double valorDaLocacao = valorDeUmAluguel(umaLocacao);
+			pontosDeAlugadorFrequente += pontosDeUmAluguel(umaLocacao);
 
-			resultado += "\t" + cada.getDVD().getTítulo() + "\t R$ " + valorCorrente + fimDeLinha;
-			valorTotal += valorCorrente;
+			resultado += "\t" + umaLocacao.getCarro().getTitulo() + " (" + umaLocacao.getCarro().getAno() + ")"
+					+ "\t R$ " + String.format(new Locale("pt", "BR"), "%,.2f", valorDaLocacao) + fimDeLinha;
+			valorTotal += valorDaLocacao;
 		} // while
 
-		resultado += "Valor total pago: R$ " + valorTotal + fimDeLinha;
+		resultado += "Valor total pago: R$ "
+				+ String.format(new Locale("pt", "BR"), "%,.2f", valorTotal) + fimDeLinha;
 		resultado += "Voce acumulou " + pontosDeAlugadorFrequente + " pontos de alugador frequente";
 
 		return resultado;
 	}
 
-	private double valorDeUmAluguel(Aluguel umAluguel) {
-		double valorDoAluguel = 0.0;
+	private double valorDeUmAluguel(Aluguel umaLocacao) {
+		double valorDaLocacao = 0.0;
 
-		switch (umAluguel.getDVD().getCódigoDePreço()) {
-		case DVD.NORMAL: // R$ 2.00 por 2 dias; dia adicional + R$ 1.50
-			valorDoAluguel += 2.0;
-			if (umAluguel.getDiasAlugado() > 2) {
-				valorDoAluguel += (umAluguel.getDiasAlugado() - 2) * 1.5;
-			}
+		switch (umaLocacao.getCarro().getCodigoDoPreco()) {
+		case Automovel.BASICO: // R$ 90,00 por dia
+			valorDaLocacao += umaLocacao.getDiasAlugado() * 90.0;
 			break;
 
-		case DVD.LANÇAMENTO: // R$ 3.00 por dia
-			valorDoAluguel += umAluguel.getDiasAlugado() * 3.00;
+		case Automovel.FAMILIA: // R$ 130,00 por dia
+			valorDaLocacao += umaLocacao.getDiasAlugado() * 130.0;
 			break;
 
-		case DVD.INFANTIL: // R$ 1.50 por 3 dias; dia adicional + R$ 1.50
-			valorDoAluguel += 1.5;
-			if (umAluguel.getDiasAlugado() > 3) {
-				valorDoAluguel += (umAluguel.getDiasAlugado() - 3) * 1.5;
+		case Automovel.LUXO: // R$ 200,00 por dia, com 10% de desconto acima de 4 diarias
+			valorDaLocacao += umaLocacao.getDiasAlugado() * 200.0;
+			if (umaLocacao.getDiasAlugado() > 4) {
+				valorDaLocacao -= valorDaLocacao * 0.1;
 			}
 			break;
 		} // switch
 
-		return valorDoAluguel;
+		return valorDaLocacao;
 	}
 
-	private int pontosDeUmAluguel(Aluguel umAluguel) {
+	private int pontosDeUmAluguel(Aluguel umaLocacao) {
 		int pontos = 1;
-		if (umAluguel.getDVD().getCódigoDePreço() == DVD.LANÇAMENTO
-				&& umAluguel.getDiasAlugado() > 1) {
-			pontos++;
+		if (umaLocacao.getCarro().getCodigoDoPreco() == Automovel.LUXO
+				&& umaLocacao.getDiasAlugado() > 2) {
+			pontos += 2;
 		}
 		return pontos;
 	}
